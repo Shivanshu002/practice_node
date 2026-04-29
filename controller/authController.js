@@ -4,13 +4,14 @@ const app = express();
 app.use(express.json())
 const users = []
 
-const registerUser = (req, res) => {
+const registerUser = async (req, res) => {
     const id = parseInt(req.params.id)
-    const newUser = req.body;
     const alreadyRegister = users.find((u) => u.id === id)
     if (alreadyRegister) {
         return res.status(400).json({ message: `user is already register with id of ${id}` })
     }
+    // DB mein save karo user schema 
+    const newUser = await User.create({ name, username, password });
 
     users.push(newUser)
     res.status(200).json({ message: "User register successfully", data: newUser })
